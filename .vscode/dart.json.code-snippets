@@ -1,0 +1,26 @@
+{
+    "MakeClass": {
+		"prefix": "makeClass",
+		"body": [
+			"class ${TM_FILENAME_BASE/(.*)$/${1:/pascalcase}/} {",
+			"  $0",
+			"}",
+		],
+		"description": "NewClass",
+	},
+	"MakerStatelessW": {
+		"prefix": "makeStatelessW",
+		"body": [
+			"import 'package:flutter/cupertino.dart';",
+			"import 'package:flutter/material.dart';\n",
+			"class ${TM_FILENAME_BASE/(.*)$/${1:/pascalcase}/} extends StatelessWidget {",
+			"  final TAG = \"${TM_FILENAME_BASE/(.*)$/${1:/pascalcase}/}\";",
+			"  ${TM_FILENAME_BASE/(.*)$/${1:/pascalcase}/}({Key? key}) : super(key: key);\n",
+			"  @override",
+			"  Widget build(BuildContext context) {",
+			"    return Container();",
+			"  }",
+			"}",
+		],
+	},
+}
