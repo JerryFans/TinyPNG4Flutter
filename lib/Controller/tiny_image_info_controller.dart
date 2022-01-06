@@ -22,37 +22,60 @@ class TinyImageInfoController extends GetxController {
       vms.add(TinyImageInfoItemViewModel.file(element));
     });
     vms.forEach((element) { 
-       beginCompressTask(file: element.file);
+       beginCompressTask(vm: element);
     });
     taskList.addAll(vms);
-    taskList.refresh();
   }
 
-  void beginCompressTask({required File file}) async {
+  void beginCompressTask({required TinyImageInfoItemViewModel vm}) async {
     // var data = await rootBundle.load("images/test1.PNG");
-    var data = await file.readAsBytes();
+    var data = await vm.file.readAsBytes();
     
     var buffer = data.buffer.asUint8List();
+
+    vm.status = TinyImageInfoStatus.uploading;
+    taskList.refresh();
+
     TinyImageInfo? info = await uploadOriginImage(buffer: buffer);
     if (info == null) {
       //upload fail
+      vm.updateStatus(TinyImageInfoStatus.uploadFail);
+      taskList.refresh();
       return;
     } 
+    vm.imageInfo = info;
+    vm.updateStatus(TinyImageInfoStatus.downloading);
+    taskList.refresh();
 
     String? path = await provider.getDownloadsPath();
 
     if (path == null) {
+      vm.updateStatus(TinyImageInfoStatus.downloadFail);
+      taskList.refresh();
       return;
     }
 
     Directory? folder = await createDirectory(path, "tinyPngFlutterOutput");
     
-    if (folder == null) { return; }
-    
-    var compressFile = await createFile(folder.path, file.fileName);
+    if (folder == null) { 
+      vm.updateStatus(TinyImageInfoStatus.downloadFail);
+      taskList.refresh();
+      return; 
+    }
+
+    vm.updateStatus(TinyImageInfoStatus.downloading);
+    taskList.refresh();
+    var compressFile = await createFile(folder.path, vm.file.fileName);
     var isSuc = await downloadOutputImage(info,compressFile.path, onReceiveProgress: (count, total) {
-      print("onReceiveProgress $count, $total");
+      vm.updateProgress(count, total);
+      taskList.refresh();
     },);
+    if (isSuc) {
+      vm.updateStatus(TinyImageInfoStatus.success);
+      taskList.refresh();
+    } else {
+      vm.updateStatus(TinyImageInfoStatus.downloadFail);
+    }
     print("$isSuc save $compressFile");
   }
 

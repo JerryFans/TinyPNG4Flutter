@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:TinyPNG4Flutter/Controller/tiny_image_info_controller.dart';
+import 'package:TinyPNG4Flutter/ImagesAnim.dart';
 import 'package:TinyPNG4Flutter/View/image_task_cell.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

@@ -23,10 +23,10 @@ class TinyImageInfo {
 }
 
 class Input {
-  int? size;
+  int size = 0;
   String? type;
 
-  Input({this.size, this.type});
+  Input({required this.size, this.type});
 
   Input.fromJson(Map<String, dynamic> json) {
     size = json['size'];
@@ -42,14 +42,14 @@ class Input {
 }
 
 class Output {
-  int? size;
+  int size = 0;
   String? type;
   int? width;
   int? height;
   double? ratio;
   String? url;
 
-  Output({this.size, this.type, this.width, this.height, this.ratio, this.url});
+  Output({required this.size, this.type, this.width, this.height, this.ratio, this.url});
 
   Output.fromJson(Map<String, dynamic> json) {
     size = json['size'];
