@@ -65,6 +65,13 @@ class TinyImageInfoController extends GetxController {
     vm.updateStatus(TinyImageInfoStatus.downloading);
     taskList.refresh();
     var compressFile = await createFile(folder.path, vm.file.fileName);
+    
+    if (compressFile == null) {
+      vm.updateStatus(TinyImageInfoStatus.downloadFail);
+      taskList.refresh();
+      return;
+    }
+
     var isSuc = await downloadOutputImage(
       info,
       compressFile.path,
@@ -78,6 +85,7 @@ class TinyImageInfoController extends GetxController {
       taskList.refresh();
     } else {
       vm.updateStatus(TinyImageInfoStatus.downloadFail);
+      taskList.refresh();
     }
     print("$isSuc save $compressFile");
   }
@@ -135,24 +143,28 @@ class TinyImageInfoController extends GetxController {
     }
   }
 
-  Future<File> createFile(String path, String fileName) async {
-    bool isExist = true;
-    var filePath = path + "/" + fileName;
-    var count = 0;
-    while (true) {
-      if (count > 0) {
-        var onlyName = fileName.split(".").first;
-        var type = fileName.split(".").last;
-        filePath = path + "/" + onlyName + "_$count" + "." + type;
+  Future<File?> createFile(String path, String fileName) async {
+    try {
+      bool isExist = true;
+      var filePath = path + "/" + fileName;
+      var count = 0;
+      while (true) {
+        if (count > 0) {
+          var onlyName = fileName.split(".").first;
+          var type = fileName.split(".").last;
+          filePath = path + "/" + onlyName + "_$count" + "." + type;
+        }
+        isExist = await File(filePath).exists();
+        print("try create path $filePath isExist $isExist");
+        if (isExist == false) {
+          break;
+        }
+        count++;
       }
-      isExist = await File(filePath).exists();
-      print("try create path $filePath isExist $isExist");
-      if (isExist == false) {
-        break;
-      }
-      count++;
+      return await File(filePath).create();
+    } catch (e) {
+      return null;
     }
-    return await File(filePath).create();
   }
 
   Future<Directory?> createDirectory(String path, String directoryName) async {
