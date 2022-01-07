@@ -11,6 +11,8 @@ Fist Step you use register a apikey in [https://tinypng.com/developers](https://
 
 And Then Enter your apikey in my app and enjoy it.
 
+![](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/Snip20220107_25.png)
+
 ## Support
 
 Only macos, will be support window in the future.
