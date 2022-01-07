@@ -2,6 +2,15 @@
 
 A TinyPng GUI Use Flutter.
 
+
+[TinyPNG](https://tinypng.com) uses smart lossy compression techniques to reduce the file size of your WEBP, JPEG and PNG files. By selectively decreasing the number of colors in the image, fewer bytes are required to store the data. The effect is nearly invisible but it makes a very large difference in file size!
+
+# Usage
+
+Fist Step you use register a apikey in [https://tinypng.com/developers](https://tinypng.com/developers)
+
+And Then Enter your apikey in my app and enjoy it.
+
 ## Support
 
 Only macos, will be support window in the future.
