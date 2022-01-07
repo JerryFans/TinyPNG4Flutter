@@ -1,6 +1,10 @@
 # TinyPNG4Flutter
 
-A new Flutter project.
+A TinyPng GUI Use Flutter.
+
+## Support
+
+Only macos, will be support window in the future.
 
 ## Getting Started
 
