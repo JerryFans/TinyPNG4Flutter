@@ -6,6 +6,13 @@ A TinyPng GUI Use Flutter.
 
 Only macos, will be support window in the future.
 
+## Release App
+
+- [App Dmg file](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/Picture%20Compresser.dmg)
+- [App Pkg file](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/Picture%20Compresser.pkg)
+
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
