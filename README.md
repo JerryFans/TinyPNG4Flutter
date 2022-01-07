@@ -7,7 +7,7 @@ A TinyPng GUI Use Flutter.
 
 # Usage
 
-Fist Step you use register a apikey in [https://tinypng.com/developers](https://tinypng.com/developers)
+Fist Step you need to register a apikey in [https://tinypng.com/developers](https://tinypng.com/developers)
 
 And Then Enter your apikey in my app and enjoy it.
 
