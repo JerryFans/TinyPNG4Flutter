@@ -26,6 +26,7 @@ class TinyImageInfoItemViewModel {
   Color  statusColor = Colors.grey;
   TinyImageInfoStatus status = TinyImageInfoStatus.uploading;
   TinyImageInfo? imageInfo;
+  double saveKB = 0;
   
   void updateProgress(int count ,int total) {
     if (status == TinyImageInfoStatus.downloading) {
@@ -60,9 +61,11 @@ class TinyImageInfoItemViewModel {
         if (imageInfo != null && imageInfo?.output != null && imageInfo?.input != null) {
           var ouput = imageInfo!.output!;
           var input = imageInfo!.input!;
-           var kb = ((input.size - ouput.size) / 1024).toStringAsFixed(2);
+           var kb = (input.size - ouput.size) / 1024;
+           this.saveKB = kb;
+           var kbStr = kb.toStringAsFixed(2);
            var ratio = ((1 - (ouput.ratio ?? 0)) * 100).toStringAsFixed(1);
-           statusInfo = "-${kb}K($ratio%)";
+           statusInfo = "-${kbStr}K($ratio%)";
         }
       }
         break;

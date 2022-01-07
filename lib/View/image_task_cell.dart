@@ -51,7 +51,7 @@ class ImageTaskCell extends StatelessWidget {
       case TinyImageInfoStatus.downloadFail:
       case TinyImageInfoStatus.uploadFail:
       return Image.asset(
-            "images/fail.png",
+            "images/error.png",
             width: 30,
             height: 30,
           );
