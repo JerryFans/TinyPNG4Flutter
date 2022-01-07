@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: TextButton(
                   child: Text(
-                    "Drop or Add your file here",
+                    "Add your file here",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
