@@ -14,4 +14,11 @@ class PathProviderUtil {
     }
     return PathProviderPlatform.instance;
   }
+
+  static String platformDirectoryLine() {
+    if (Platform.isWindows) {
+      return "\\";
+    }
+    return "/";
+  }
 }

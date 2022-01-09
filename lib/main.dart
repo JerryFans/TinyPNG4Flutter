@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:TinyPNG4Flutter/Controller/const_util.dart';
-import 'package:TinyPNG4Flutter/Controller/path_provider_util.dart';
-import 'package:TinyPNG4Flutter/Controller/tiny_image_info_controller.dart';
-import 'package:TinyPNG4Flutter/View/image_task_cell.dart';
+import 'package:tiny_png4_flutter/Controller/const_util.dart';
+import 'package:tiny_png4_flutter/Controller/path_provider_util.dart';
+import 'package:tiny_png4_flutter/Controller/tiny_image_info_controller.dart';
+import 'package:tiny_png4_flutter/View/image_task_cell.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TinyPNG4Flutter',
+      title: 'tiny_png4_flutter',
       theme: ThemeData(),
       home: MyHomePage(title: 'TinyPNGFlutter'),
     );
@@ -51,11 +51,15 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences.getInstance().then((pre) async {
       var savePath = pre.getString(KSavePathKey);
       if (savePath == null || savePath.isEmpty) {
-        var provider = PathProviderUtil.provider();
-        String? path = await provider.getDownloadsPath();
-        if (path == null) return;
-        final filePath = path + "/" + "tinyPngFlutterOutput";
-        pre.setString(KSavePathKey, filePath);
+        try {
+          var provider = PathProviderUtil.provider();
+          String? path = await provider.getDownloadsPath();
+          if (path == null) return;
+          final filePath = path + PathProviderUtil.platformDirectoryLine() + "tinyPngFlutterOutput";
+          pre.setString(KSavePathKey, filePath);
+        } catch (e) {
+
+        }
       }
     });
   }
@@ -84,7 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (savePath == null) return;
                   var checkCreate = await controller.createDirectory(savePath);
                   if (checkCreate != null) {
-                    Process.run("open", [savePath]);
+                    if (Platform.isMacOS) {
+                      Process.run("open", [savePath]);
+                    } else if (Platform.isWindows) {
+                      Process.run("explorer", [savePath]);
+                    }
                   }
                 },
                 tooltip: 'Open compress image folder',
@@ -162,6 +170,12 @@ class _MyHomePageState extends State<MyHomePage> {
           textPadding: EdgeInsets.all(15));
       return;
     }
+    if (await controller.checkHaveSavePath() == false) {
+      _showSettingBottomSheet();
+      showToast("Please choose your output path",
+          textPadding: EdgeInsets.all(15));
+      return;
+    }
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
     if (result != null) {
@@ -170,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
       files.forEach((element) {
         if (element.path.toLowerCase().endsWith("jpg") ||
             element.path.toLowerCase().endsWith("jpeg") ||
+            element.path.toLowerCase().endsWith("webp") ||
             element.path.toLowerCase().endsWith("png")) {
           chooseFiles.add(element);
         } else {

@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:TinyPNG4Flutter/Controller/const_util.dart';
-import 'package:TinyPNG4Flutter/Controller/tiny_image_info_controller.dart';
+import 'package:tiny_png4_flutter/Controller/const_util.dart';
+import 'package:tiny_png4_flutter/Controller/tiny_image_info_controller.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,7 +72,11 @@ class BottomSettingView extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
+                      if (Platform.isMacOS) {
                       Process.run("open", ["https://tinypng.com/developers"]);
+                    } else if (Platform.isWindows) {
+                      Process.run("explorer", ["https://tinypng.com/developers"]);
+                    }
                     },
                     child: Text(
                       "Get your API key",
@@ -106,6 +109,7 @@ class BottomSettingView extends StatelessWidget {
                         cursorHeight: 10,
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
+                            hintText: "choose your output path",
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.black)),

@@ -1,5 +1,5 @@
-import 'package:TinyPNG4Flutter/ImagesAnim.dart';
-import 'package:TinyPNG4Flutter/Model/tiny_image_info_item_view_model.dart';
+import 'package:tiny_png4_flutter/ImagesAnim.dart';
+import 'package:tiny_png4_flutter/Model/tiny_image_info_item_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

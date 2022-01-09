@@ -1,13 +1,12 @@
 import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import 'tiny_image_info.dart';
+import 'package:tiny_png4_flutter/Controller/path_provider_util.dart';
 
 extension FileExtention on FileSystemEntity {
   String get fileName {
-    return this.path.split("/").last;
+    print("my file path is ${this.path}");
+    return this.path.split(PathProviderUtil.platformDirectoryLine()).last;
   }
 }
 

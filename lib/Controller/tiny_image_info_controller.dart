@@ -1,9 +1,9 @@
 import 'dart:ffi';
 
-import 'package:TinyPNG4Flutter/Controller/path_provider_util.dart';
-import 'package:TinyPNG4Flutter/Model/tiny_image_info.dart';
+import 'package:tiny_png4_flutter/Controller/path_provider_util.dart';
+import 'package:tiny_png4_flutter/Model/tiny_image_info.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:TinyPNG4Flutter/Model/tiny_image_info_item_view_model.dart';
+import 'package:tiny_png4_flutter/Model/tiny_image_info_item_view_model.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -139,6 +139,11 @@ class TinyImageInfoController extends GetxController {
     return pre.getString(KApiKey) != null;
   }
 
+  Future<bool> checkHaveSavePath() async {
+    var pre = await SharedPreferences.getInstance();
+    return pre.getString(KSavePathKey) != null;
+  }
+
   Future<bool> downloadOutputImage(TinyImageInfo imageInfo, String savePath,
       {Function(int count, int total)? onReceiveProgress}) async {
     String? url = imageInfo.output?.url;
@@ -168,13 +173,13 @@ class TinyImageInfoController extends GetxController {
   Future<File?> createFile(String path, String fileName) async {
     try {
       bool isExist = true;
-      var filePath = path + "/" + fileName;
+      var filePath = path + PathProviderUtil.platformDirectoryLine() + fileName;
       var count = 0;
       while (true) {
         if (count > 0) {
           var onlyName = fileName.split(".").first;
           var type = fileName.split(".").last;
-          filePath = path + "/" + onlyName + "_$count" + "." + type;
+          filePath = path + PathProviderUtil.platformDirectoryLine() + onlyName + "_$count" + "." + type;
         }
         isExist = await File(filePath).exists();
         print("try create path $filePath isExist $isExist");
