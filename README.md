@@ -14,9 +14,11 @@ And Then Enter your apikey in my app and enjoy it.
 
 ![](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/Snip20220107_25.png)
 
-## Support
+## Platform Support
 
-MacOS and Windows
+| Linux | macOS | Windows |
+| :---: | :---: | :-----: |
+|   ➖   |   ✔️   |    ✔️    |
 
 ## Release App
 
