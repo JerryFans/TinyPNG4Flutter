@@ -1,6 +1,6 @@
 # TinyPNG4Flutter
 
-A TinyPng GUI Use Flutter.  Flutter Version must >= 2.2.3
+A TinyPng Deskstop GUI Use Flutter.  Flutter Version must >= 2.2.3. Suppor Macos & Windows
 
 [TinyPNG](https://tinypng.com) uses smart lossy compression techniques to reduce the file size of your WEBP, JPEG and PNG files. By selectively decreasing the number of colors in the image, fewer bytes are required to store the data. The effect is nearly invisible but it makes a very large difference in file size!
 
@@ -14,7 +14,7 @@ And Then Enter your apikey in my app and enjoy it.
 
 ## Support
 
-MacOS and Window
+MacOS and Windows
 
 ## Release App
 
