@@ -13,10 +13,17 @@ import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'View/bottom_setting_view.dart';
 import 'package:file_drag_and_drop/file_drag_and_drop_channel.dart';
+import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dragAndDropChannel.initializedMainView();
+  await windowManager.ensureInitialized();
+  windowManager.waitUntilReadyToShow().then((_) async {
+    await windowManager.setResizable(false);
+    await windowManager.setSize(Size(800, 600));
+    await windowManager.show();
+  });
   runApp(GetMaterialApp(
     navigatorKey: Get.key,
     home: OKToast(
