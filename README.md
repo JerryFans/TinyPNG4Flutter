@@ -38,14 +38,14 @@ And Then Enter your apikey in my app and enjoy it.
 - v1.0 support macOS Pick file to compress image
 - v1.1 support macOS、windows, can drag file into app to compress image in macOS 
 
-## Release App
+## Release App Latest
 
 ### MacOS
 
-- [Picture Compresser Dmg file](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/Picture%20Compresser.dmg)
-- [Picture Compresser Pkg file](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/Picture%20Compresser.pkg)
+- [Picture Compresser Dmg file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.1/Picture_Compresser_macOS_v1_1.dmg)
+- [Picture Compresser Pkg file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.1/Picture_Compress_macOS_v1_1.pkg)
 
 ### Windows
 
-- [Picture Compresser Installer file](https://github.com/JerryFans/TinyPNG4Flutter/blob/main/tinyPngToolForWindows.zip)
+- [Picture Compresser Installer file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.1/Picture_Compresser_windows_v1_1.zip)
 
