@@ -1,5 +1,6 @@
 <p align="center">
- <a href="https://github.com/flutter/flutter">
+  <img src="https://img.shields.io/github/license/JerryFans/TinyPNG4Flutter">
+  <a href="https://github.com/flutter/flutter">
     <img alt="Language Flutter" src="https://img.shields.io/badge/Language-Flutter-blue.svg?longCache=true&style=flat-square">
   </a>
   <a href="https://github.com/JerryFans/TinyPNG4Flutter"><img src="https://img.shields.io/badge/Platform-macOS-blue.svg?longCache=true&style=flat-square">
@@ -8,7 +9,6 @@
   </a>
   <a href="https://github.com/JerryFans/TinyPNG4Flutter/issues"><img src="https://img.shields.io/github/issues/JerryFans/TinyPNG4Flutter">
   </a>
-  <img src="https://img.shields.io/github/license/JerryFans/TinyPNG4Flutter">
 </p>
 
 # TinyPNG4Flutter
@@ -32,6 +32,11 @@ And Then Enter your apikey in my app and enjoy it.
 | Linux | macOS | Windows |
 | :---: | :---: | :-----: |
 |   ➖   |   ✔️   |    ✔️    |
+
+## Version
+
+- v1.0 support macOS Pick file to compress image
+- v1.1 support macOS、windows, can drag file into app to compress image in macOS 
 
 ## Release App
 
