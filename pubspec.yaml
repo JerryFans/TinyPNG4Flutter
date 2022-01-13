@@ -32,6 +32,7 @@ dependencies:
   file_picker: ^4.3.0
   path_provider: ^2.0.4
   path_provider_macos: ^2.0.4
+  file_drag_and_drop: ^0.0.2
   get: 4.5.1 
   dio: ^4.0.4
   oktoast: ^3.1.5

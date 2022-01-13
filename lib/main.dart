@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:file_drag_and_drop/drag_container_listener.dart';
+import 'package:file_drag_and_drop/file_result.dart';
 import 'package:tiny_png4_flutter/Controller/const_util.dart';
 import 'package:tiny_png4_flutter/Controller/path_provider_util.dart';
 import 'package:tiny_png4_flutter/Controller/tiny_image_info_controller.dart';
@@ -9,10 +11,12 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'View/bottom_setting_view.dart';
+import 'package:file_drag_and_drop/file_drag_and_drop_channel.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dragAndDropChannel.initializedMainView();
   runApp(GetMaterialApp(
     navigatorKey: Get.key,
     home: OKToast(
@@ -42,12 +46,15 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    implements DragContainerListener {
   final controller = TinyImageInfoController();
+  var visibilityTips = false;
 
   @override
   void initState() {
     super.initState();
+    dragAndDropChannel.addListener(this);
     SharedPreferences.getInstance().then((pre) async {
       var savePath = pre.getString(KSavePathKey);
       if (savePath == null || savePath.isEmpty) {
@@ -55,13 +62,19 @@ class _MyHomePageState extends State<MyHomePage> {
           var provider = PathProviderUtil.provider();
           String? path = await provider.getDownloadsPath();
           if (path == null) return;
-          final filePath = path + PathProviderUtil.platformDirectoryLine() + "tinyPngFlutterOutput";
+          final filePath = path +
+              PathProviderUtil.platformDirectoryLine() +
+              "tinyPngFlutterOutput";
           pre.setString(KSavePathKey, filePath);
-        } catch (e) {
-
-        }
+        } catch (e) {}
       }
     });
+  }
+
+  @override
+  void dispose() {
+    dragAndDropChannel.removeListener(this);
+    super.dispose();
   }
 
   @override
@@ -74,9 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
           Obx(() => Padding(
                 padding: EdgeInsets.only(left: 30),
                 child: Text(
-                    "${controller.taskCount.value} task(s) saved ${controller.saveKb.value.toStringAsFixed(2)}KB",
-                    style: TextStyle(color: Colors.white),
-                    ),
+                  "${controller.taskCount.value} task(s) saved ${controller.saveKb.value.toStringAsFixed(2)}KB",
+                  style: TextStyle(color: Colors.white),
+                ),
               )),
           Row(
             children: [
@@ -124,80 +137,122 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: Container(
-        margin: EdgeInsets.only(top: 15, bottom: 80),
-        child: Obx(() {
-          if (controller.taskList.length > 0) {
-            return ListView.separated(
-              itemCount: controller.taskList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(
-                  height: 15,
-                  color: Colors.transparent,
-                );
-              },
-              itemBuilder: (_, int index) => ImageTaskCell(
-                vm: controller.taskList[index],
-              ),
-            );
-          } else {
-            return Container(
-              child: Center(
-                child: TextButton(
-                  child: Text(
-                    "Add your file here",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  onPressed: () {
-                    _pickFiles();
+      body: Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 15, bottom: 80),
+            child: Obx(() {
+              if (controller.taskList.length > 0) {
+                return ListView.separated(
+                  itemCount: controller.taskList.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      height: 15,
+                      color: Colors.transparent,
+                    );
                   },
-                ),
-              ),
-            );
-          }
-        }),
+                  itemBuilder: (_, int index) => ImageTaskCell(
+                    vm: controller.taskList[index],
+                  ),
+                );
+              } else {
+                return Container(
+                  child: Center(
+                    child: TextButton(
+                      child: Text(
+                        "Add or Drag Your File Here",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onPressed: () {
+                        _pickFiles();
+                      },
+                    ),
+                  ),
+                );
+              }
+            }),
+          ),
+          Visibility(
+            visible: visibilityTips,
+            child: Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  color: Colors.black54,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 45,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey,
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                        padding: EdgeInsets.all(15),
+                        child: Text("Drag your image file Here", style: TextStyle(color: Colors.white),),
+                      ),
+                    ],
+                  ),
+                )),
+          )
+        ],
       ),
     );
   }
 
   void _pickFiles() async {
-    if (await controller.checkHaveApiKey() == false) {
-      _showSettingBottomSheet();
-      showToast("Please enter your TinyPNG Apikey",
-          textPadding: EdgeInsets.all(15));
-      return;
-    }
-    if (await controller.checkHaveSavePath() == false) {
-      _showSettingBottomSheet();
-      showToast("Please choose your output path",
-          textPadding: EdgeInsets.all(15));
+    if (await checkCanPicker() == false) {
       return;
     }
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
     if (result != null) {
       List<File> files = result.paths.map((path) => File(path ?? "")).toList();
-      List<File> chooseFiles = [];
-      files.forEach((element) {
-        if (element.path.toLowerCase().endsWith("jpg") ||
-            element.path.toLowerCase().endsWith("jpeg") ||
-            element.path.toLowerCase().endsWith("webp") ||
-            element.path.toLowerCase().endsWith("png")) {
-          chooseFiles.add(element);
-        } else {
-          showToast('invalid image file', textPadding: EdgeInsets.all(15));
-          print("invalid image file : ${element.path}");
-        }
-      });
+      List<File> chooseFiles = chooseImageFiles(files);
       if (chooseFiles.isNotEmpty) {
         controller.refreshWithFileList(chooseFiles);
       }
     } else {
       showToast("Cancel Pick files", textPadding: EdgeInsets.all(15));
     }
+  }
+
+  List<File> chooseImageFiles(List<File> receiverFiles) {
+    List<File> chooseFiles = [];
+    receiverFiles.forEach((element) {
+      if (element.path.toLowerCase().endsWith("jpg") ||
+          element.path.toLowerCase().endsWith("jpeg") ||
+          element.path.toLowerCase().endsWith("webp") ||
+          element.path.toLowerCase().endsWith("png")) {
+        chooseFiles.add(element);
+      } else {
+        showToast('have invalid image file', textPadding: EdgeInsets.all(15));
+        print("invalid image file : ${element.path}");
+      }
+    });
+    return chooseFiles;
+  }
+
+  Future<bool> checkCanPicker() async {
+    if (await controller.checkHaveApiKey() == false) {
+      _showSettingBottomSheet();
+      showToast("Please enter your TinyPNG Apikey",
+          textPadding: EdgeInsets.all(15));
+      return false;
+    }
+    if (await controller.checkHaveSavePath() == false) {
+      _showSettingBottomSheet();
+      showToast("Please choose your output path",
+          textPadding: EdgeInsets.all(15));
+      return false;
+    }
+    return true;
   }
 
   void _showSettingBottomSheet() {
@@ -209,5 +264,49 @@ class _MyHomePageState extends State<MyHomePage> {
             controller: controller,
           );
         });
+  }
+
+  @override
+  void draggingFileEntered() {
+    print("flutter: draggingFileEntered");
+    setState(() {
+      visibilityTips = true;
+    });
+  }
+
+  @override
+  void draggingFileExit() {
+    print("flutter: draggingFileExit");
+    setState(() {
+      visibilityTips = false;
+    });
+  }
+
+  @override
+  void prepareForDragFileOperation() {
+    print("flutter: prepareForDragFileOperation");
+    setState(() {
+      visibilityTips = false;
+    });
+  }
+
+  @override
+  void performDragFileOperation(List<DragFileResult> fileResults) {
+    print("flutter: performDragFileOperation");
+    checkCanPicker().then((canPicker) {
+      if (canPicker) {
+        var collectionFiles = <File>[];
+        fileResults.forEach((element) {
+          if (element.isDirectory == false) {
+            collectionFiles.add(File(element.path));
+          }
+          //TODO Also can collect the image file in Directory
+        });
+        var chooseFiles = chooseImageFiles(collectionFiles);
+        if (chooseFiles.isNotEmpty) {
+          controller.refreshWithFileList(chooseFiles);
+        }
+      }
+    });
   }
 }

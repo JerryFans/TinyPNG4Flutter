@@ -78,6 +78,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.1.2"
+  file_drag_and_drop:
+    dependency: "direct main"
+    description:
+      name: file_drag_and_drop
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.2"
   file_picker:
     dependency: "direct main"
     description:
