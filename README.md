@@ -13,7 +13,7 @@
 
 # TinyPNG4Flutter
 
-A TinyPNG Compress Image Desktop GUI For Flutter. Support macOS and Windows.  
+A TinyPNG Compress Image Desktop GUI For Flutter. Support macOS and windows.  
 
 Flutter Version must >= 2.2.3. 
 
