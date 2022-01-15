@@ -56,7 +56,12 @@ class Output {
     type = json['type'];
     width = json['width'];
     height = json['height'];
-    ratio = json['ratio'];
+    var jsonRatio = json['ratio'];
+    if (jsonRatio is double) {
+      ratio = jsonRatio;
+    } else if (jsonRatio is int) {
+      ratio = jsonRatio.toDouble();
+    }
     url = json['url'];
   }
 

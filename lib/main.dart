@@ -159,6 +159,9 @@ class _MyHomePageState extends State<MyHomePage>
                     );
                   },
                   itemBuilder: (_, int index) => ImageTaskCell(
+                    retryCallBack: (model) {
+                      controller.beginCompressTask(vm: model);
+                    },
                     vm: controller.taskList[index],
                   ),
                 );
