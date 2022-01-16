@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:tiny_png4_flutter/Controller/path_provider_util.dart';
 import 'package:tiny_png4_flutter/Model/tiny_image_info.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -34,6 +36,16 @@ class TinyImageInfoController extends GetxController {
     });
     taskList.addAll(vms);
     taskCount.value = taskList.length;
+  }
+
+  void clear() {
+    if (taskList.length == 0) {
+      showToast("No Have Data Clear", textPadding: EdgeInsets.all(15));
+      return;
+    }
+    taskList.assignAll([]);
+    taskCount.value = 0;
+    saveKb.value = 0.0;
   }
 
   void beginCompressTask({required TinyImageInfoItemViewModel vm}) async {
@@ -100,6 +112,14 @@ class TinyImageInfoController extends GetxController {
       taskList.refresh();
     }
     print("$isSuc save $compressFile");
+  }
+
+  String getSavedString() {
+    if (saveKb.value > 10000) {
+      var mb =  saveKb.value / 1024.0;
+      return "${mb.toStringAsFixed(2)}MB";
+    }
+    return "${saveKb.value.toStringAsFixed(2)}KB";
   }
 
   Future<TinyImageInfo?> uploadOriginImage({required Uint8List? buffer}) async {

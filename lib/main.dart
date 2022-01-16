@@ -94,12 +94,23 @@ class _MyHomePageState extends State<MyHomePage>
           Obx(() => Padding(
                 padding: EdgeInsets.only(left: 30),
                 child: Text(
-                  "${controller.taskCount.value} task(s) saved ${controller.saveKb.value.toStringAsFixed(2)}KB",
+                  "${controller.taskCount.value} task(s) saved ${controller.getSavedString()}",
                   style: TextStyle(color: Colors.white),
                 ),
               )),
           Row(
             children: [
+              FloatingActionButton(
+                backgroundColor: Colors.grey,
+                onPressed: () {
+                  controller.clear();
+                },
+                tooltip: 'Clear Data',
+                child: Icon(Icons.cleaning_services),
+              ),
+              SizedBox(
+                width: 15,
+              ),
               FloatingActionButton(
                 backgroundColor: Colors.grey,
                 onPressed: () async {
