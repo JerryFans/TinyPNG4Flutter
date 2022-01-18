@@ -43,8 +43,8 @@ And Then Enter your apikey in my app and enjoy it.
 
 ### MacOS
 
-- [Picture Compresser Dmg file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.1/Picture_Compresser_macOS_v1_1.dmg)
-- [Picture Compresser Pkg file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.1/Picture_Compress_macOS_v1_1.pkg)
+- [Picture Compresser Dmg file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.2.0/Picture_Compress_macOS_v1_2.dmg)
+- [Picture Compresser Pkg file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.2.0/Picture_Compress_macOS_v1_2.pkg)
 
 ### Windows
 
