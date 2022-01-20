@@ -1,4 +1,4 @@
-import 'package:oktoast/oktoast.dart';
+import 'dart:io';
 import 'package:tiny_png4_flutter/ImagesAnim.dart';
 import 'package:tiny_png4_flutter/Model/tiny_image_info_item_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +8,8 @@ class ImageTaskCell extends StatelessWidget {
   final TinyImageInfoItemViewModel vm;
   final Function(TinyImageInfoItemViewModel vm) retryCallBack;
 
-  ImageTaskCell({Key? key, required this.vm, required this.retryCallBack}) : super(key: key);
+  ImageTaskCell({Key? key, required this.vm, required this.retryCallBack})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ImageTaskCell extends StatelessWidget {
             children: [
               Image.file(
                 vm.file,
-                height: 100,
+                height: 80,
                 fit: BoxFit.fitHeight,
               ),
               SizedBox(
@@ -50,6 +51,31 @@ class ImageTaskCell extends StatelessWidget {
           ),
           Row(
             children: [
+              Visibility(
+                  visible: vm.status == TinyImageInfoStatus.success,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (vm.saveFile != null) {
+                        if (Platform.isMacOS) {
+                          Process.run("open", ['-R', vm.saveFile!.path]);
+                        } else if (Platform.isWindows) {
+                          Process.run("explorer", [vm.saveFile!.path]);
+                        }
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "images/folder.png",
+                          width: 30,
+                          height: 30,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                      ],
+                    ),
+                  )),
               Visibility(
                   visible: vm.status == TinyImageInfoStatus.downloadFail ||
                       vm.status == TinyImageInfoStatus.uploadFail,

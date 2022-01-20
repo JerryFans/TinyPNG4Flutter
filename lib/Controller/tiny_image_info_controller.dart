@@ -104,6 +104,7 @@ class TinyImageInfoController extends GetxController {
       },
     );
     if (isSuc) {
+      vm.saveFile = compressFile;
       vm.updateStatus(TinyImageInfoStatus.success);
       taskList.refresh();
       saveKb.value += vm.saveKB;

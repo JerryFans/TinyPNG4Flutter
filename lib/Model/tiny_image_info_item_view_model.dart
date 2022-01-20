@@ -26,6 +26,7 @@ class TinyImageInfoItemViewModel {
   TinyImageInfoStatus status = TinyImageInfoStatus.uploading;
   TinyImageInfo? imageInfo;
   double saveKB = 0;
+  File? saveFile;
   
   void updateProgress(int count ,int total) {
     if (status == TinyImageInfoStatus.downloading) {
