@@ -1,0 +1,18 @@
+output: release_app/
+releases:
+  - name: prod
+    jobs:
+      - name: release-macos-dmg
+        package:
+          platform: macos
+          target: dmg
+          build_args:
+            dart-define:
+              APP_ENV: production
+      - name: release-windows-exe
+        package:
+          platform: windows
+          target: exe
+          build_args:
+            dart-define:
+              APP_ENV: production
