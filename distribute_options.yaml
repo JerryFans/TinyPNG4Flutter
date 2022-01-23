@@ -9,6 +9,11 @@ releases:
           build_args:
             dart-define:
               APP_ENV: production
+        publish:
+          target: github
+          args:
+            repo-owner: JerryFans
+            repo-name: TinyPNG4Flutter
       - name: release-windows-exe
         package:
           platform: windows

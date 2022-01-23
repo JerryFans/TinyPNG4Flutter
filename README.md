@@ -39,6 +39,7 @@ And Then Enter your apikey in my app and enjoy it.
 - v1.0 support macOS Pick file to compress image
 - v1.1 support macOS、windows, can drag file into app to compress image in macOS 
 - v1.2 support clear task and retry task
+- v1.3 support open and select single success compress file
 
 ## Release App Latest
 
