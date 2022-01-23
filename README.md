@@ -7,6 +7,8 @@
   </a>
     <a href="https://github.com/JerryFans/TinyPNG4Flutter"><img src="https://img.shields.io/badge/Platform-windows-blue.svg?longCache=true&style=flat-square">
   </a>
+    <a href="https://github.com/leanflutter/flutter_distributor"><img src="https://img.shields.io/badge/distribute%20with-flutter__distributor-green?style=flat-square">
+  </a>
   <a href="https://github.com/JerryFans/TinyPNG4Flutter/issues"><img src="https://img.shields.io/github/issues/JerryFans/TinyPNG4Flutter">
   </a>
 </p>
