@@ -54,3 +54,9 @@ And Then Enter your apikey in my app and enjoy it.
 
 - [Picture Compresser Installer file](https://github.com/JerryFans/TinyPNG4Flutter/releases/download/1.1/Picture_Compresser_windows_v1_1.zip)
 
+## AppStore
+
+- [PictureCompresser](https://apps.apple.com/cn/app/picturecompresser/id1604145760?l=en&mt=12)
+
+This app is published in mac AppStore and saled $1.99.  If you want to have a coffee to me, buy it in AppStore. Thanks.
+
