@@ -108,7 +108,6 @@ class _WOActionImageState extends State<ImagesAnim> {
     final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     // final images = json.decode(manifestJson).keys.where((String key) => key.contains(widget.filePath));
     Map<String,dynamic> map = json.decode(manifestJson);
-    print("all images files $map");
     List<String> resList = <String>[];
     map.keys.forEach((element) {
       if (element.startsWith(widget.filePath) && element.contains(".DS_Store") == false) {
