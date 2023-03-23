@@ -17,7 +17,7 @@
 
 A TinyPNG Compress Image Desktop GUI For Flutter. Support macOS and windows.  
 
-Flutter Version must >= 2.2.3. 
+Flutter Version must >= 2.2.3. after v1.4.1 version need update to 3.7.1
 
 [TinyPNG](https://tinypng.com) uses smart lossy compression techniques to reduce the file size of your WEBP, JPEG and PNG files. By selectively decreasing the number of colors in the image, fewer bytes are required to store the data. The effect is nearly invisible but it makes a very large difference in file size!
 
@@ -56,7 +56,7 @@ And Then Enter your apikey in my app and enjoy it.
 
 ## AppStore
 
-- [PictureCompresser](https://apps.apple.com/cn/app/picturecompresser/id1604145760?l=en&mt=12)
+- [Picture Compresser](https://apps.apple.com/cn/app/picture-compresser/id1604145760?l=en&mt=12)
 
 This app is published in mac AppStore and saled $1.99.  If you want to have a coffee to me, buy it in AppStore. Thanks.
 
